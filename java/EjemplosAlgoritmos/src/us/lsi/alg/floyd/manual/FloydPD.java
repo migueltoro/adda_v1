@@ -45,7 +45,8 @@ public class FloydPD {
 		
 		public List<Boolean> actions() {
 			if(this.isBaseCase()) return List.of();
-			return List.of(false,true);
+			if(i == k || k ==j) return List.of(false);
+			else return List.of(false,true);
 		}
 		
 		
@@ -57,7 +58,7 @@ public class FloydPD {
 		}
 		
 		public Boolean isBaseCase() {
-			return this.i.equals(this.j) ||  k == n; //FloydVertex.graph.containsEdge(this.i,this.j) ;
+			return  k == n; //FloydVertex.graph.containsEdge(this.i,this.j) ;
 		}
 		
 		public Double baseCaseSolution() {

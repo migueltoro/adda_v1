@@ -33,10 +33,7 @@ public class MatricesPD {
 			return new MatrixInf(nf, nc);
 		}
 		
-		public static Integer getWeight(List<MatrixProblem> ls) {	
-			Integer i = ls.get(0).i();
-			Integer a = ls.get(0).j();
-			Integer j = ls.get(1).j();
+		public static Integer getWeight(Integer i,Integer a, Integer j) {
 			return MatricesPD.matrices.get(i).nf()*MatricesPD.matrices.get(a).nf()*MatricesPD.matrices.get(j-1).nc();
 		}
 		
@@ -131,7 +128,7 @@ public class MatricesPD {
 				}
 				Spmt spa = null;
 				if(spNeighbors != null) {
-					spa = Spmt.of(a,s+MatrixInf.getWeight(actual.neighbors(a)));
+					spa = Spmt.of(a,s+MatrixInf.getWeight(actual.i(),a,actual.j()));
 				}
 				sps.add(spa);
 			}
@@ -144,7 +141,10 @@ public class MatricesPD {
 
 	public String solucion(MatrixProblem v) {
 		Spmt s = this.solutionsTree.get(v);
-		if(s.a() == null) return String.format("(%d,%d)",v.i(),v.j());
+		if(s.a() == null) {
+			if(v.j-v.i == 2)  return String.format("(%d,%d)",v.i(),v.j()-1);
+			else return String.format("%d",v.i());
+		}
 		else {
 			List<MatrixProblem> vc = v.neighbors(s.a());
 			return String.format("(%s,%s)",solucion(vc.get(0)),solucion(vc.get(1)));
